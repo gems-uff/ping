@@ -30,6 +30,22 @@ private var consumableList : List.<InfluenceEdge> = new List.<InfluenceEdge>();
 public function CreateInfluence(tag : String, ID : String, source : String, influenceName : String, influenceValue : String, consumable : boolean, quantity : int)
 {
 	var newInfluence : InfluenceEdge = new InfluenceEdge(tag, ID, source, influenceName, influenceValue, consumable, quantity);
+	
+	if(consumable)
+		consumableList.Add(newInfluence);
+	else
+		influenceList.Add(newInfluence);
+}
+
+public function CreateInfluenceWithMissable(tag : String, ID : String, source : String, influenceName : String, influenceValue : String, consumable : boolean, quantity : int, target : GameObject)
+{
+	// Create Missable Influence and associate the edge with the GameObject
+	var prov : ExtractProvenance = target.GetComponent(ExtractProvenance);
+	var missableID : String = provenance.CreateInfluenceEdge(source, prov.GetCurrentVertex().ID, influenceName + " Missed", "0");
+	
+	// Create the normal Influence that will replace the missable edge when consumed
+	var newInfluence : InfluenceEdge = new InfluenceEdge(tag, ID, source, influenceName, influenceValue, consumable, quantity, missableID);
+	
 	if(consumable)
 		consumableList.Add(newInfluence);
 	else
@@ -53,19 +69,6 @@ public function CleanInfluenceConsumable()
 public function CleanInfluenceNotConsumable()
 {
 	influenceList = new List.<InfluenceEdge>();
-	/*
-	var i : int;
-	//var removeList : List.<int> = new List.<int>();
-	for (i = 0; i < influenceList.Count; i++)
-	{
-		if(influenceList[i].consumable == false)
-		{
-			influenceList.RemoveAt(i);
-			//removeList.Add(i);
-			i = 0;
-		}
-	}
-	*/
 }
 
 //=================================================================================================================
@@ -120,62 +123,54 @@ public function RemoveInfluenceByID(ID : String, list : List.<InfluenceEdge>)
 // Check influence list by 'tag'
 function WasInfluencedByTag(tag : String, targetID : String)
 {
-	WasInfluencedByTag(tag, targetID, influenceList);
-	WasInfluencedByTag(tag, targetID, consumableList);
-}
-function WasInfluencedByTag(tag : String, targetID : String, list : List.<InfluenceEdge>)
-{
-	var i : int;
-
-	for (i = 0; i < list.Count; i++)
-	{
-		if(list[i].tag == tag)
-		{
-			if(list[i].consumable)
-			{
-				list[i].quantity--;
-				provenance.CreateInfluenceEdge(list[i].source, targetID, list[i].name, list[i].infValue);
-				if(list[i].quantity ==  0)
-				{
-					list.RemoveAt(i);
-				}
-								
-			}
-			else
-			{
-				provenance.CreateInfluenceEdge(list[i].source, targetID, list[i].name, list[i].infValue);
-			}
-		}
-	}
+	WasInfluencedBy(tag, targetID, true);
 }
 
 // Check influence list by influence's 'ID'
 function WasInfluencedByID(ID : String, targetID : String)
 {
-	WasInfluencedByID(ID, targetID, influenceList);
-	WasInfluencedByID(ID, targetID, consumableList);
+	WasInfluencedBy(ID, targetID, false);
 }
-function WasInfluencedByID(ID : String, targetID : String, list : List.<InfluenceEdge>)
+
+
+// Check both influence lists
+function WasInfluencedBy(type : String, targetID : String, isTag : boolean)
+{
+	// Normal influence List
+	WasInfluencedBy(type, targetID, influenceList, isTag);
+	// Consumable influence List
+	WasInfluencedBy(type, targetID, consumableList, isTag);
+}
+
+function WasInfluencedBy(type : String, targetID : String, list : List.<InfluenceEdge>, isTag : boolean)
 {
 	var i : int;
+	var edgeValue : String;
 
 	for (i = 0; i < list.Count; i++)
 	{
-		if(list[i].ID == ID)
+		// Determine if the search is by TAG or ID
+		if(isTag)
+			edgeValue = list[i].tag;
+		else
+			edgeValue = list[i].ID;
+			
+		if(edgeValue == type)
 		{
-			if(list[i].consumable)
+			list[i].quantity--;
+			// Check if the influence had a missable placeholder
+			if(list[i].missableID != null)
 			{
-				list[i].quantity--;
-				provenance.CreateInfluenceEdge(list[i].source, targetID, list[i].name, list[i].infValue);
-				if(list[i].quantity ==  0)
-				{
-					list.RemoveAt(i);
-				}
-								
+				// This influence had a missable placeholder
+				// Need to update the placeholder instead of adding a new edge
+				provenance.UpdateInfluenceEdge(list[i].source, targetID, list[i].name, list[i].infValue, list[i].missableID);
 			}
 			else
-			{
 				provenance.CreateInfluenceEdge(list[i].source, targetID, list[i].name, list[i].infValue);
+
+			if((list[i].quantity <=  0) && (list[i].consumable))
+			{
+				list.RemoveAt(i);
 			}
 		}
 	}

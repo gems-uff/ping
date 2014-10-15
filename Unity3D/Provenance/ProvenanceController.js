@@ -134,12 +134,28 @@ public function CreateProvenanceEdge(source: Vertex, target : Vertex)
 // Defines the edge provenance label as "WasInfluencedBy"
 // Add the edge to the edgeList
 //=================================================================================================================
-public function CreateInfluenceEdge(targetID : String, sourceID : String, infName : String, infValue : String)
+public function CreateInfluenceEdge(targetID : String, sourceID : String, infName : String, infValue : String) : String
 {
 	var newEdge : Edge = new Edge(NewEdgeID(), infName, "WasInfluencedBy", infValue, sourceID, targetID);
 	AddEdge(newEdge);
+	
+	return newEdge.ID;
 }
 
+public function UpdateInfluenceEdge(targetID : String, sourceID : String, infName : String, infValue : String, edgeID : String)
+{
+	var i : int;
+	// Search for edge in edgeList
+	for (i = 0; i < edgeList.Count; i++)
+	{
+		if(edgeList[i].ID == edgeID)
+		{
+			edgeList[i] = new Edge(edgeID, infName, "WasInfluencedBy", infValue, sourceID, targetID);
+			// Found. No need to keep searching
+			i = edgeList.Count + 1;
+		}
+	}
+}
 //=================================================================================================================
 // Export all Provenance information gathered to a XML file
 //=================================================================================================================

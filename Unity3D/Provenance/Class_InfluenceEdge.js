@@ -17,6 +17,7 @@ class InfluenceEdge
 	public var infValue : String;		// This is the value of the influence Edge
 	public var consumable : boolean;	// This controls if the influence has a limit of usages
 	public var quantity : int;			// This is how many times this influence can still be used
+	public var missableID : String;		// This is used for missable influences
 	
 	//================================================================================================================
 	// Empty Influence Constructor
@@ -30,6 +31,7 @@ class InfluenceEdge
 		this.infValue = "";
 		this.consumable = false;
 		this.quantity = 1;
+		this.missableID = null;
 	}
 	
 	//================================================================================================================
@@ -44,5 +46,21 @@ class InfluenceEdge
 		this.infValue = infValue_;
 		this.consumable = consumable_;
 		this.quantity = quantity_;
+		this.missableID = null;
+	}
+	
+	//================================================================================================================
+	// Missable Influence Constructor
+	//================================================================================================================
+	function InfluenceEdge(tag_ : String, ID_ : String, source_ : String, name_ : String, infValue_ : String, consumable_ : boolean, quantity_ : int, _missableID : String)
+	{
+		this.tag = tag_;
+		this.ID = ID_;
+		this.source = source_;
+		this.name = name_;
+		this.infValue = infValue_;
+		this.consumable = consumable_;
+		this.quantity = quantity_;
+		this.missableID = _missableID;
 	}
 }

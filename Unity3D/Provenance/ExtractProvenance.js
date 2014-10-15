@@ -212,22 +212,34 @@ private function ClearList()
 //=================================================================================================================
 // Generate an influence for this vertex
 //=================================================================================================================
-// Creates one influence of 'tag' that can be used for X times and then expires
+// Creates one influence that can be used for X times and then expires
 public function GenerateInfluence(tag : String, ID : String, influenceName : String, influenceValue : String, quantity : int)
 {
 	influenceContainer.CreateInfluence(tag, ID, currentVertex.ID, influenceName, influenceValue, true, quantity);
 }
 
-// Creates one influence of 'tag' that never expires with usages
+// Creates one influence that never expires with usages
 public function GenerateInfluence(tag : String, ID : String, influenceName : String, influenceValue : String)
 {
 	influenceContainer.CreateInfluence(tag, ID, currentVertex.ID, influenceName, influenceValue, false, 10);
 }
 
+// Creates one missable influence that can be used for X times and then expires
+public function GenerateInfluence(tag : String, ID : String, influenceName : String, influenceValue : String, quantity : int, target : GameObject)
+{
+	influenceContainer.CreateInfluenceWithMissable(tag, ID, currentVertex.ID, influenceName, influenceValue, true, quantity, target);
+}
+
+// Creates one missable influence that never expires with usages
+public function GenerateInfluence(tag : String, ID : String, influenceName : String, influenceValue : String, target : GameObject)
+{
+	influenceContainer.CreateInfluenceWithMissable(tag, ID, currentVertex.ID, influenceName, influenceValue, false, 10, target);
+}
 //=================================================================================================================
 // Checks if current vertex was influenced by any other vertex
 // If so, consume the influence and generate the appropriate edge connecting both vertices
 // Need to check all influences, since it can have more than one at the same time
+// Returns a list of all influence's ID used
 //=================================================================================================================
 // By 'tag'
 public function HasInfluence(tag : String)
