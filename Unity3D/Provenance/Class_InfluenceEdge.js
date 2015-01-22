@@ -18,6 +18,7 @@ class InfluenceEdge
 	public var consumable : boolean;	// This controls if the influence has a limit of usages
 	public var quantity : int;			// This is how many times this influence can still be used
 	public var missableID : String;		// This is used for missable influences
+	public var expirationTime : float;
 	
 	//================================================================================================================
 	// Empty Influence Constructor
@@ -32,8 +33,9 @@ class InfluenceEdge
 		this.consumable = false;
 		this.quantity = 1;
 		this.missableID = null;
+		this.expirationTime = -1;
 	}
-	
+	/*
 	//================================================================================================================
 	// Influence Constructor
 	//================================================================================================================
@@ -47,12 +49,30 @@ class InfluenceEdge
 		this.consumable = consumable_;
 		this.quantity = quantity_;
 		this.missableID = null;
+		this.timeStamp = -1;
+		this.duration = -1;
+	}
+	*/
+	//================================================================================================================
+	// Influence Constructor
+	//================================================================================================================
+	function InfluenceEdge(tag_ : String, ID_ : String, source_ : String, name_ : String, infValue_ : String, consumable_ : boolean, quantity_ : int, expirationTime_ : float)
+	{
+		this.tag = tag_;
+		this.ID = ID_;
+		this.source = source_;
+		this.name = name_;
+		this.infValue = infValue_;
+		this.consumable = consumable_;
+		this.quantity = quantity_;
+		this.missableID = null;
+		this.expirationTime = expirationTime_;
 	}
 	
 	//================================================================================================================
 	// Missable Influence Constructor
 	//================================================================================================================
-	function InfluenceEdge(tag_ : String, ID_ : String, source_ : String, name_ : String, infValue_ : String, consumable_ : boolean, quantity_ : int, _missableID : String)
+	function InfluenceEdge(tag_ : String, ID_ : String, source_ : String, name_ : String, infValue_ : String, consumable_ : boolean, quantity_ : int, _missableID : String, expirationTime_ : float)
 	{
 		this.tag = tag_;
 		this.ID = ID_;
@@ -62,5 +82,6 @@ class InfluenceEdge
 		this.consumable = consumable_;
 		this.quantity = quantity_;
 		this.missableID = _missableID;
+		this.expirationTime = expirationTime_;
 	}
 }

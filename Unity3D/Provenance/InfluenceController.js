@@ -27,25 +27,40 @@ private var consumableList : List.<InfluenceEdge> = new List.<InfluenceEdge>();
 // Create a new influence and add it to the influence list
 // Function invoked at 'ExtractProvenance' to create a new influence
 //=================================================================================================================
+/*
 public function CreateInfluence(tag : String, ID : String, source : String, influenceName : String, influenceValue : String, consumable : boolean, quantity : int)
 {
-	var newInfluence : InfluenceEdge = new InfluenceEdge(tag, ID, source, influenceName, influenceValue, consumable, quantity);
+	CreateInfluence(tag, ID, source, influenceName, influenceValue, consumable, quantity, -1)
+}
+public function CreateInfluence(tag : String, ID : String, source : String, influenceName : String, influenceValue : String, consumable : boolean, quantity : int, expirationTime : float)
+{
+	var newInfluence : InfluenceEdge = new InfluenceEdge(tag, ID, source, influenceName, influenceValue, consumable, quantity, expirationTime);
 	
 	if(consumable)
 		consumableList.Add(newInfluence);
 	else
 		influenceList.Add(newInfluence);
 }
-
 public function CreateInfluenceWithMissable(tag : String, ID : String, source : String, influenceName : String, influenceValue : String, consumable : boolean, quantity : int, target : GameObject)
 {
-	// Create Missable Influence and associate the edge with the GameObject
-	var prov : ExtractProvenance = target.GetComponent(ExtractProvenance);
-	var missableID : String = provenance.CreateInfluenceEdge(source, prov.GetCurrentVertex().ID, influenceName + " Missed", "0");
-	
-	// Create the normal Influence that will replace the missable edge when consumed
-	var newInfluence : InfluenceEdge = new InfluenceEdge(tag, ID, source, influenceName, influenceValue, consumable, quantity, missableID);
-	
+	CreateInfluenceWithMissable(tag, ID, source, influenceName, influenceValue, consumable, quantity, target, -1)
+}
+*/
+public function CreateInfluence(tag : String, ID : String, source : String, influenceName : String, influenceValue : String, consumable : boolean, quantity : int, target : GameObject, expirationTime : float)
+{
+	var newInfluence : InfluenceEdge;
+	if(target != null)
+	{
+		// Create Missable Influence and associate the edge with the GameObject
+		var prov : ExtractProvenance = target.GetComponent(ExtractProvenance);
+		var missableID : String = provenance.CreateInfluenceEdge(source, prov.GetCurrentVertex().ID, influenceName + " Missed", "0");
+		
+		// Create the normal Influence that will replace the missable edge when consumed
+		newInfluence = new InfluenceEdge(tag, ID, source, influenceName, influenceValue, consumable, quantity, missableID, expirationTime);
+	}
+	else
+		newInfluence = new InfluenceEdge(tag, ID, source, influenceName, influenceValue, consumable, quantity, expirationTime);
+		
 	if(consumable)
 		consumableList.Add(newInfluence);
 	else
@@ -158,20 +173,26 @@ function WasInfluencedBy(type : String, targetID : String, list : List.<Influenc
 		if(edgeValue == type)
 		{
 			list[i].quantity--;
-			// Check if the influence had a missable placeholder
-			if(list[i].missableID != null)
+			// Check if this influence had expiration time
+			if((list[i].expirationTime == -1) || (Time.time < (list[i].expirationTime)))
 			{
-				// This influence had a missable placeholder
-				// Need to update the placeholder instead of adding a new edge
-				provenance.UpdateInfluenceEdge(list[i].source, targetID, list[i].name, list[i].infValue, list[i].missableID);
-			}
-			else
-				provenance.CreateInfluenceEdge(list[i].source, targetID, list[i].name, list[i].infValue);
+				// Check if the influence had a missable placeholder
+				if(list[i].missableID != null)
+				{
+					// This influence had a missable placeholder
+					// Need to update the placeholder instead of adding a new edge
+					provenance.UpdateInfluenceEdge(list[i].source, targetID, list[i].name, list[i].infValue, list[i].missableID);
+				}
+				else
+					provenance.CreateInfluenceEdge(list[i].source, targetID, list[i].name, list[i].infValue);
 
-			if((list[i].quantity <=  0) && (list[i].consumable))
-			{
-				list.RemoveAt(i);
+				if((list[i].quantity <=  0) && (list[i].consumable))
+				{
+					list.RemoveAt(i);
+				}
 			}
+			else	//Remove it since it expired
+				list.RemoveAt(i);
 		}
 	}
 }

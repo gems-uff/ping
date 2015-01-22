@@ -212,28 +212,46 @@ private function ClearList()
 //=================================================================================================================
 // Generate an influence for this vertex
 //=================================================================================================================
-// Creates one influence that can be used for X times and then expires
-public function GenerateInfluence(tag : String, ID : String, influenceName : String, influenceValue : String, quantity : int)
-{
-	influenceContainer.CreateInfluence(tag, ID, currentVertex.ID, influenceName, influenceValue, true, quantity);
-}
+// Legend: M = Missable / C = Consumable / E = Expirable
 
-// Creates one influence that never expires with usages
 public function GenerateInfluence(tag : String, ID : String, influenceName : String, influenceValue : String)
 {
-	influenceContainer.CreateInfluence(tag, ID, currentVertex.ID, influenceName, influenceValue, false, 10);
+	GenerateInfluenceMCE(tag, ID, influenceName, influenceValue, false, 10, null, -1);
 }
 
-// Creates one missable influence that can be used for X times and then expires
-public function GenerateInfluence(tag : String, ID : String, influenceName : String, influenceValue : String, quantity : int, target : GameObject)
+public function GenerateInfluenceC(tag : String, ID : String, influenceName : String, influenceValue : String, quantity : int)
 {
-	influenceContainer.CreateInfluenceWithMissable(tag, ID, currentVertex.ID, influenceName, influenceValue, true, quantity, target);
+	GenerateInfluenceMCE(tag, ID, influenceName, influenceValue, true, quantity, null, -1);
 }
 
-// Creates one missable influence that never expires with usages
-public function GenerateInfluence(tag : String, ID : String, influenceName : String, influenceValue : String, target : GameObject)
+public function GenerateInfluenceM(tag : String, ID : String, influenceName : String, influenceValue : String, target : GameObject)
 {
-	influenceContainer.CreateInfluenceWithMissable(tag, ID, currentVertex.ID, influenceName, influenceValue, false, 10, target);
+	GenerateInfluenceMCE(tag, ID, influenceName, influenceValue, false, 10, target, -1);
+}	
+
+public function GenerateInfluenceE(tag : String, ID : String, influenceName : String, influenceValue : String, expiration : float)
+{
+	GenerateInfluenceMCE(tag, ID, influenceName, influenceValue, false, 10, null, expiration);
+}
+
+public function GenerateInfluenceCE(tag : String, ID : String, influenceName : String, influenceValue : String, quantity : int, expiration : float)
+{
+	GenerateInfluenceMCE(tag, ID, influenceName, influenceValue, true, quantity, null, expiration);
+}
+
+public function GenerateInfluenceMC(tag : String, ID : String, influenceName : String, influenceValue : String, quantity : int, target : GameObject)
+{
+	GenerateInfluenceMCE(tag, ID, influenceName, influenceValue, true, quantity, target, -1);
+}
+
+public function GenerateInfluenceME(tag : String, ID : String, influenceName : String, influenceValue : String, target : GameObject, expiration : float)
+{
+	GenerateInfluenceMCE(tag, ID, influenceName, influenceValue, false, 10, target, expiration);
+}
+
+public function GenerateInfluenceMCE(tag : String, ID : String, influenceName : String, influenceValue : String, consumable : boolean, quantity : int, target : GameObject, expiration : float)
+{
+	influenceContainer.CreateInfluence(tag, ID, currentVertex.ID, influenceName, influenceValue, true, quantity, target, expiration);
 }
 //=================================================================================================================
 // Checks if current vertex was influenced by any other vertex
