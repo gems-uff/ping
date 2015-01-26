@@ -161,6 +161,8 @@ function WasInfluencedBy(type : String, targetID : String, list : List.<Influenc
 {
 	var i : int;
 	var edgeValue : String;
+	
+	var stack = new Array();
 
 	for (i = 0; i < list.Count; i++)
 	{
@@ -184,16 +186,26 @@ function WasInfluencedBy(type : String, targetID : String, list : List.<Influenc
 					provenance.UpdateInfluenceEdge(list[i].source, targetID, list[i].name, list[i].infValue, list[i].missableID);
 				}
 				else
+				{
 					provenance.CreateInfluenceEdge(list[i].source, targetID, list[i].name, list[i].infValue);
+				}
 
 				if((list[i].quantity <=  0) && (list[i].consumable))
 				{
-					list.RemoveAt(i);
+					//list.RemoveAt(i);
+					stack.push(i);
 				}
 			}
 			else	//Remove it since it expired
-				list.RemoveAt(i);
+				//list.RemoveAt(i);
+				stack.push(i);
 		}
+	}
+	
+	var stackSize : int = stack.length;
+	for (i = 0; i < stackSize; i++)
+	{
+		list.RemoveAt(stack.pop());
 	}
 }
 
