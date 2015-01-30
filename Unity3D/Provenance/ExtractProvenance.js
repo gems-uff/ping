@@ -78,9 +78,10 @@ public function NewActivityVertex(date_ : String, label_ : String, details_ : St
 // User defines the Vertex.date field and the gameobject
 public function NewActivityVertex(date_ : String, label_ : String, details_ : String, gameobject_ : GameObject)
 {
+	var oldTarget : String = currentVertex.type;
 	PopulateAttributes(gameobject_);
 	currentVertex = provenance.AddVertex(date_, "Activity", label_, attributeList, details_, currentVertex);
-	if((agentVertex != null) && (currentVertex != "Agent"))
+	if((agentVertex != null) && (currentVertex.type != "Agent") && (oldTarget != "Agent"))
 	{
 		provenance.CreateProvenanceEdge(currentVertex, agentVertex);
 	}
@@ -354,4 +355,12 @@ public function GetAgentVertex()
 public function SetAgentVertex(vertex : Vertex)
 {
 	agentVertex = vertex;
+}
+
+function Awake()
+{
+	var ProvObj : GameObject = GameObject.Find("Provenance");
+	influenceContainer = ProvObj.GetComponent(InfluenceController);  
+	provenance = ProvObj.GetComponent(ProvenanceController);  
+	
 }
