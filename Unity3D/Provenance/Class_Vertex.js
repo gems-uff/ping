@@ -22,8 +22,6 @@ class Vertex
  	@XmlArrayItem("attribute")
 	public var attributes : List.<Attribute>;	// A List representing each vertex' attributes 
 													// Each attribute must have a String (Name) and a Number (att_value)
-										
-	public var details : String;	// Vertex description (Any additional info)
 
 	//================================================================================================================
 	// Empty Vertex Constructor
@@ -35,13 +33,12 @@ class Vertex
 		this.type = "";
 		this.label = "";
 		this.attributes = new List.<Attribute>();
-		this.details = "";	
 	}
 	
 	//================================================================================================================
 	// Vertex Constructor
 	//================================================================================================================
-	public function Vertex(id_ : String, date_ : String, type_ : String, label_ : String, attribute_ : List.<Attribute>, details_ : String)
+	public function Vertex(id_ : String, date_ : String, type_ : String, label_ : String, attribute_ : List.<Attribute>)
 	{
 		this.ID = id_;
 		this.date = date_;
@@ -55,8 +52,6 @@ class Vertex
 		{
 			this.attributes.Add(attribute_[i]);
 		}
-		
-		this.details = details_;
 	}	
 }
 

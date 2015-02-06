@@ -41,14 +41,14 @@ public function Prov_GetPlayerAttributes()
 public function Prov_Player()
 {
 	Prov_GetPlayerAttributes();
-	prov.NewAgentVertex("Player","");
+	prov.NewAgentVertex("Player");
 }
 
 // <INTERFACE> Player Walk action
 public function Prov_Walk()
 {
 	Prov_GetPlayerAttributes();
-	prov.NewActivityVertex("Walking","");
+	prov.NewActivityVertex("Walking");
 	prov.HasInfluence("Player");
 }
 
@@ -56,7 +56,7 @@ public function Prov_Walk()
 public function Prov_Jump()
 {
 	Prov_GetPlayerAttributes();
-	prov.NewActivityVertex("Jump","");
+	prov.NewActivityVertex("Jump");
 	prov.HasInfluence("Player");
 }
 
@@ -64,7 +64,7 @@ public function Prov_Jump()
 public function Prov_Interact()
 {
 	Prov_GetPlayerAttributes();
-	prov.NewActivityVertex("Interacted","");
+	prov.NewActivityVertex("Interacted");
 	prov.HasInfluence("Player");
 }
 
@@ -78,7 +78,7 @@ public function Prov_Regenerate(regValue : float)
 public function Prov_Attack()
 {
 	Prov_GetPlayerAttributes();
-	prov.NewActivityVertex("Shooting","");
+	prov.NewActivityVertex("Shooting");
 	prov.HasInfluence("Player");
 }
 
@@ -100,16 +100,25 @@ function Prov_TakeDamage(enemy : GameObject, damageAmount : float)
 public function Prov_TakeDamage(infID : String)
 {
 	Prov_GetPlayerAttributes();
-	prov.NewActivityVertex("Being Hit","");
+	prov.NewActivityVertex("Being Hit");
 	// Check Influence
 	prov.HasInfluence_ID(infID);
+}
+
+// Player took damage
+public function Prov_TakeDamage()
+{
+	Prov_GetPlayerAttributes();
+	prov.NewActivityVertex("Being Hit");
+	// Check Influence
+	prov.HasInfluence("PlayerDamage");
 }
 
 // <INTERFACE> Player Death action
 public function Prov_Death()
 {	
 	Prov_GetPlayerAttributes();
-	prov.NewActivityVertex("Dead","Dead");
+	prov.NewActivityVertex("Dead");
 	prov.GenerateInfluenceC("Player", this.GetInstanceID().ToString(), "Respawned", "-1", 1);
 	//Prov_Export();
 }
@@ -118,8 +127,7 @@ public function Prov_Death()
 public function Prov_Respawn()
 {	
 	Prov_GetPlayerAttributes();
-	prov.NewActivityVertex("Respawn","Respawn");
+	prov.NewActivityVertex("Respawn");
 	prov.HasInfluence("Player");
 	//Prov_Export();
 }
-	

@@ -27,9 +27,9 @@ private var edgeList : List.<Edge> = new List.<Edge>();
 // Add edge to edgeList
 // Return new vertex in order to update the caller
 //=================================================================================================================
-public function AddVertex(date_ : String, type_ : String, label_ : String, attribute_ : List.<Attribute>, details_ : String, target : Vertex) : Vertex
+public function AddVertex(date_ : String, type_ : String, label_ : String, attribute_ : List.<Attribute>, target : Vertex) : Vertex
 {
-	var source : Vertex = new Vertex(NewVertexID(), date_, type_, label_, attribute_, details_);
+	var source : Vertex = new Vertex(NewVertexID(), date_, type_, label_, attribute_);
 
 	vertexList.Add(source);
 	

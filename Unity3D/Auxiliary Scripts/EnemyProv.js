@@ -39,7 +39,7 @@ public function Prov_GetEnemyAttributes()
 public function Prov_Enemy()
 {
 	Prov_GetEnemyAttributes();
-	prov.NewAgentVertex(enemyType,"");
+	prov.NewAgentVertex(enemyType);
 	Prov_Idle();
 }
 
@@ -47,15 +47,17 @@ public function Prov_Enemy()
 public function Prov_Idle()
 {
 	Prov_GetEnemyAttributes();
-	prov.NewActivityVertex("Idle","", this.gameObject);
+	prov.NewActivityVertex("Idle", this.gameObject);
+	prov.HasInfluence("Enemy");
 }
 
 // <INTERFACE> Enemy Spot action
 public function Prov_OnSpot()
 {
 	Prov_GetEnemyAttributes();
-	prov.NewActivityVertex("Spotted","", this.gameObject);
+	prov.NewActivityVertex("Spotted", this.gameObject);
 	prov.GenerateInfluenceC("Player", this.GetInstanceID().ToString(), "Spotted", "1", 1);
+	prov.HasInfluence("Enemy");
 	return this.GetInstanceID().ToString();
 }
 
@@ -63,8 +65,9 @@ public function Prov_OnSpot()
 public function Prov_LostTrack()
 {
 	Prov_GetEnemyAttributes();
-	prov.NewActivityVertex("LostTrack","", this.gameObject);
+	prov.NewActivityVertex("LostTrack", this.gameObject);
 	prov.GenerateInfluenceC("Player", this.GetInstanceID().ToString(), "Spotted", "-1", 1);
+	prov.HasInfluence("Enemy");
 	return this.GetInstanceID().ToString();
 }
 
@@ -72,8 +75,9 @@ public function Prov_LostTrack()
 public function Prov_Attack(damageAmount : float)
 {
 	Prov_GetEnemyAttributes();
-	prov.NewActivityVertex("Attacking","", this.gameObject);
-	prov.GenerateInfluenceC("Player", this.GetInstanceID().ToString(), "Health (Player)", (-damageAmount).ToString(), 1);
+	prov.NewActivityVertex("Attacking", this.gameObject);
+	prov.HasInfluence("Enemy");
+	prov.GenerateInfluenceCE("PlayerDamage", this.GetInstanceID().ToString(), "Health (Player)", (-damageAmount).ToString(), 1, 50);
 	return this.GetInstanceID().ToString();
 }
 
@@ -87,7 +91,8 @@ public function Prov_Regenerate(regValue : float)
 public function Prov_Death(scoreValue : float)
 {
 	Prov_GetEnemyAttributes();
-	prov.NewActivityVertex("Dead","Dead", this.gameObject);
+	prov.NewActivityVertex("Dead", this.gameObject);
+	prov.HasInfluence("Enemy");
 	
 	if(scoreValue != 0)
 		prov.GenerateInfluenceC("Player", this.GetInstanceID().ToString(), "Score", scoreValue.ToString(), 1);
@@ -97,7 +102,8 @@ public function Prov_Death(scoreValue : float)
 public function Prov_Suicide()
 {
 	Prov_GetEnemyAttributes();
-	prov.NewActivityVertex("Suicided","Suicided", this.gameObject);
+	prov.NewActivityVertex("Suicided", this.gameObject);
+	prov.HasInfluence("Enemy");
 	prov.GenerateInfluenceC("Player", this.GetInstanceID().ToString(), "Score Missed", "0", 1);
 }
 
@@ -105,21 +111,14 @@ public function Prov_Suicide()
 public function Prov_Escaped()
 {
 	Prov_GetEnemyAttributes();
-	prov.NewActivityVertex("Escaped","", this.gameObject);
+	prov.NewActivityVertex("Escaped", this.gameObject);
+	prov.HasInfluence("Enemy");
 	prov.GenerateInfluenceC("Player", this.GetInstanceID().ToString(), "Score Missed", "0", 1);
 }
 
 // <INTERFACE> Enemy took damage
 function Prov_TakeDamage(enemy : GameObject, damageAmount : float)
 {
-/*
-	var enemyProv : PlayerProv = enemy.GetComponent(PlayerProv); 
-	
-	if(enemyProv == null)
-	{
-		enemyProv = enemy.GetComponentInParent(PlayerProv); 
-	}
-*/	
 	Prov_generateTakeDamage(damageAmount);
 	Prov_Hurt(this.GetInstanceID().ToString());
 }
@@ -137,7 +136,7 @@ function Prov_generateTakeDamage(damageAmount : float)
 public function Prov_Hurt(infID : String)
 {
 	Prov_GetEnemyAttributes();
-	prov.NewActivityVertex("Taking Hit","", this.gameObject);
+	prov.NewActivityVertex("Taking Hit", this.gameObject);
 	prov.HasInfluence_ID(infID);
 }
 	

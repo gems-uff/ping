@@ -58,29 +58,30 @@ private var agentVertex : Vertex = null;
 // Creates a new vertex from the Activity Type
 // Add the new vertex to the vertexList in the Provenance Controller
 //=================================================================================================================
+
 // Uses Time.time for the Vertex.date field and this gameobject
-public function NewActivityVertex(label_ : String, details_ : String)
+public function NewActivityVertex(label_ : String)
 {
-	NewActivityVertex((Time.time).ToString(), label_, details_, this.gameObject);
+	NewActivityVertex((Time.time).ToString(), label_, this.gameObject);
 }
 
 // Uses Time.time for the Vertex.date field
-public function NewActivityVertex(label_ : String, details_ : String, gameobject_ : GameObject)
+public function NewActivityVertex(label_ : String, gameobject_ : GameObject)
 {
-	NewActivityVertex((Time.time).ToString(), label_, details_, gameobject_);
+	NewActivityVertex((Time.time).ToString(), label_, gameobject_);
 }
 
 // User defines the Vertex.date field
-public function NewActivityVertex(date_ : String, label_ : String, details_ : String)
+public function NewActivityVertex(date_ : String, label_ : String)
 {
-	NewActivityVertex(date_, label_, details_, this.gameObject);
+	NewActivityVertex(date_, label_, this.gameObject);
 }
 // User defines the Vertex.date field and the gameobject
-public function NewActivityVertex(date_ : String, label_ : String, details_ : String, gameobject_ : GameObject)
+public function NewActivityVertex(date_ : String, label_ : String, gameobject_ : GameObject)
 {
 	var oldTarget : String = currentVertex.type;
 	PopulateAttributes(gameobject_);
-	currentVertex = provenance.AddVertex(date_, "Activity", label_, attributeList, details_, currentVertex);
+	currentVertex = provenance.AddVertex(date_, "Activity", label_, attributeList, currentVertex);
 	if((agentVertex != null) && (currentVertex.type != "Agent") && (oldTarget != "Agent"))
 	{
 		provenance.CreateProvenanceEdge(currentVertex, agentVertex);
@@ -94,28 +95,28 @@ public function NewActivityVertex(date_ : String, label_ : String, details_ : St
 // Add the new vertex to the vertexList in the Provenance Controller
 //=================================================================================================================
 // Uses Time.time for the Vertex.date field
-public function NewAgentVertex(label_ : String, details_ : String)
+public function NewAgentVertex(label_ : String)
 {
-	NewAgentVertex((Time.time).ToString(), label_, details_, this.gameObject);
+	NewAgentVertex((Time.time).ToString(), label_, this.gameObject);
 }
 
 // Uses Time.time for the Vertex.date field
-public function NewAgentVertex(label_ : String, details_ : String, gameobject_ : GameObject)
+public function NewAgentVertex(label_ : String, gameobject_ : GameObject)
 {
-	NewAgentVertex((Time.time).ToString(), label_, details_, gameobject_);
+	NewAgentVertex((Time.time).ToString(), label_, gameobject_);
 }
 
 // User defines the Vertex.date field
-public function NewAgentVertex(date_ : String, label_ : String, details_ : String)
+public function NewAgentVertex(date_ : String, label_ : String)
 {
-	NewAgentVertex(date_, label_, details_, this.gameObject);
+	NewAgentVertex(date_, label_, this.gameObject);
 }
 
 // User defines the Vertex.date field
-public function NewAgentVertex(date_ : String, label_ : String, details_ : String, gameobject_ : GameObject)
+public function NewAgentVertex(date_ : String, label_ : String, gameobject_ : GameObject)
 {
 	PopulateAttributes(gameobject_);
-	currentVertex = provenance.AddVertex(date_, "Agent", label_, attributeList, details_, null);
+	currentVertex = provenance.AddVertex(date_, "Agent", label_, attributeList, null);
 	agentVertex = currentVertex;
 	ClearList();
 }
@@ -126,54 +127,54 @@ public function NewAgentVertex(date_ : String, label_ : String, details_ : Strin
 // Add the new vertex to the vertexList in the Provenance Controller
 //=================================================================================================================
 // Uses Time.time for the Vertex.date field
-public function NewEntityVertex(label_ : String, details_ : String)
+public function NewEntityVertex(label_ : String)
 {
-	NewEntityVertex((Time.time).ToString(), label_, details_, this.gameObject);
+	NewEntityVertex((Time.time).ToString(), label_, this.gameObject);
 }
 
 // Uses Time.time for the Vertex.date field
-public function NewEntityVertex(label_ : String, details_ : String, gameobject_ : GameObject)
+public function NewEntityVertex(label_ : String, gameobject_ : GameObject)
 {
-	NewEntityVertex((Time.time).ToString(), label_, details_, gameobject_);
+	NewEntityVertex((Time.time).ToString(), label_, gameobject_);
 }
 
 // Uses Time.time for the Vertex.date field. Links Entity to the Agent that created it
-public function NewEntityVertexFromAgent(label_ : String, details_ : String)
+public function NewEntityVertexFromAgent(label_ : String)
 {
-	NewEntityVertexFromAgent((Time.time).ToString(), label_, details_, this.gameObject);
+	NewEntityVertexFromAgent((Time.time).ToString(), label_, this.gameObject);
 }
 
 // Uses Time.time for the Vertex.date field. Links Entity to the Agent that created it
-public function NewEntityVertexFromAgent(label_ : String, details_ : String, gameobject_ : GameObject)
+public function NewEntityVertexFromAgent(label_ : String, gameobject_ : GameObject)
 {
-	NewEntityVertexFromAgent((Time.time).ToString(), label_, details_, gameobject_);
+	NewEntityVertexFromAgent((Time.time).ToString(), label_, gameobject_);
 }
 
 // Uses Time.time for the Vertex.date field
-public function NewEntityVertex(date_ : String, label_ : String, details_ : String)
+public function NewEntityVertex(date_ : String, label_ : String)
 {
-	NewEntityVertex(date_, label_, details_, this.gameObject);
+	NewEntityVertex(date_, label_, this.gameObject);
 }
 
 // User defines the Vertex.date field
-public function NewEntityVertex(date_ : String, label_ : String, details_ : String, gameobject_ : GameObject)
+public function NewEntityVertex(date_ : String, label_ : String, gameobject_ : GameObject)
 {
 	PopulateAttributes(gameobject_);
-	currentVertex = provenance.AddVertex(date_, "Entity", label_, attributeList, details_, currentVertex);
+	currentVertex = provenance.AddVertex(date_, "Entity", label_, attributeList, currentVertex);
 	ClearList();
 }
 
 // User defines the Vertex.date field. Links Entity to the Agent that created it
-public function NewEntityVertexFromAgent(date_ : String, label_ : String, details_ : String)
+public function NewEntityVertexFromAgent(date_ : String, label_ : String)
 {
-	NewEntityVertexFromAgent(date_, label_, details_, this.gameObject);
+	NewEntityVertexFromAgent(date_, label_, this.gameObject);
 }
 
 // User defines the Vertex.date field. Links Entity to the Agent that created it
-public function NewEntityVertexFromAgent(date_ : String, label_ : String, details_ : String, gameobject_ : GameObject)
+public function NewEntityVertexFromAgent(date_ : String, label_ : String, gameobject_ : GameObject)
 {
 	PopulateAttributes(gameobject_);
-	currentVertex = provenance.AddVertex(date_, "Entity", label_, attributeList, details_, currentVertex);
+	currentVertex = provenance.AddVertex(date_, "Entity", label_, attributeList, currentVertex);
 	
 	if((agentVertex != null) && (currentVertex != "Agent"))
 	{
@@ -189,16 +190,16 @@ public function NewEntityVertexFromAgent(date_ : String, label_ : String, detail
 //=================================================================================================================
 
 // Uses Time.time for the Vertex.date field
-public function NewVertex(type_ : String, label_ : String, details_ : String, gameobject_ : GameObject)
+public function NewVertex(type_ : String, label_ : String, gameobject_ : GameObject)
 {
-	NewVertex((Time.time).ToString(), type_, label_, details_, gameobject_);
+	NewVertex((Time.time).ToString(), type_, label_, gameobject_);
 }
 
 // User defines the Vertex.date field
-public function NewVertex(date_ : String, type_ : String, label_ : String, details_ : String, gameobject : GameObject)
+public function NewVertex(date_ : String, type_ : String, label_ : String, gameobject : GameObject)
 {
 	PopulateAttributes(gameobject);
-	currentVertex = provenance.AddVertex(date_, type_, label_, attributeList, details_, currentVertex);
+	currentVertex = provenance.AddVertex(date_, type_, label_, attributeList, currentVertex);
 	ClearList();
 }
 //=================================================================================================================

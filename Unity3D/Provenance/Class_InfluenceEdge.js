@@ -13,7 +13,7 @@ class InfluenceEdge
 										// or to group up various influences for the influence-check process
 	public var ID : String;				// This is the influence's ID and is used to single out an influence from a 'type' group
 	public var source : String;			// This contains the vertex ID that generated the influence
-	public var name : String;			// This is the name of the influence Edge
+	public var type : String;			// This is the name of the influence Edge
 	public var infValue : String;		// This is the value of the influence Edge
 	public var consumable : boolean;	// This controls if the influence has a limit of usages
 	public var quantity : int;			// This is how many times this influence can still be used
@@ -28,7 +28,7 @@ class InfluenceEdge
 		this.tag = "";
 		this.ID = "";
 		this.source = "";
-		this.name = "";
+		this.type = "";
 		this.infValue = "";
 		this.consumable = false;
 		this.quantity = 1;
@@ -39,12 +39,12 @@ class InfluenceEdge
 	//================================================================================================================
 	// Influence Constructor
 	//================================================================================================================
-	function InfluenceEdge(tag_ : String, ID_ : String, source_ : String, name_ : String, infValue_ : String, consumable_ : boolean, quantity_ : int)
+	function InfluenceEdge(tag_ : String, ID_ : String, source_ : String, type_ : String, infValue_ : String, consumable_ : boolean, quantity_ : int)
 	{
 		this.tag = tag_;
 		this.ID = ID_;
 		this.source = source_;
-		this.name = name_;
+		this.type = type_;
 		this.infValue = infValue_;
 		this.consumable = consumable_;
 		this.quantity = quantity_;
@@ -56,12 +56,12 @@ class InfluenceEdge
 	//================================================================================================================
 	// Influence Constructor
 	//================================================================================================================
-	function InfluenceEdge(tag_ : String, ID_ : String, source_ : String, name_ : String, infValue_ : String, consumable_ : boolean, quantity_ : int, expirationTime_ : float)
+	function InfluenceEdge(tag_ : String, ID_ : String, source_ : String, type_ : String, infValue_ : String, consumable_ : boolean, quantity_ : int, expirationTime_ : float)
 	{
 		this.tag = tag_;
 		this.ID = ID_;
 		this.source = source_;
-		this.name = name_;
+		this.type = type_;
 		this.infValue = infValue_;
 		this.consumable = consumable_;
 		this.quantity = quantity_;
@@ -72,12 +72,12 @@ class InfluenceEdge
 	//================================================================================================================
 	// Missable Influence Constructor
 	//================================================================================================================
-	function InfluenceEdge(tag_ : String, ID_ : String, source_ : String, name_ : String, infValue_ : String, consumable_ : boolean, quantity_ : int, _missableID : String, expirationTime_ : float)
+	function InfluenceEdge(tag_ : String, ID_ : String, source_ : String, type_ : String, infValue_ : String, consumable_ : boolean, quantity_ : int, _missableID : String, expirationTime_ : float)
 	{
 		this.tag = tag_;
 		this.ID = ID_;
 		this.source = source_;
-		this.name = name_;
+		this.type = type_;
 		this.infValue = infValue_;
 		this.consumable = consumable_;
 		this.quantity = quantity_;
