@@ -77,7 +77,7 @@ public function Prov_Attack(damageAmount : float)
 	Prov_GetEnemyAttributes();
 	prov.NewActivityVertex("Attacking", this.gameObject);
 	prov.HasInfluence("Enemy");
-	prov.GenerateInfluenceCE("PlayerDamage", this.GetInstanceID().ToString(), "Health (Player)", (-damageAmount).ToString(), 1, 50);
+	prov.GenerateInfluenceCE("PlayerDamage", this.GetInstanceID().ToString(), "Health (Player)", (-damageAmount).ToString(), 1, Time.time + 5);
 	return this.GetInstanceID().ToString();
 }
 
