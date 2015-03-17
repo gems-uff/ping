@@ -46,7 +46,7 @@ function Awake()
 	
 	Prov_Player(playerName);
 	
-	InvokeRepeating("Prov_Driving", 2, 2);
+	//InvokeRepeating("Prov_Driving", 2, 2);
 	
 	lastFwd = transform.forward;
 }
@@ -200,6 +200,7 @@ function Prov_Crash()
 	if((isFlying)&&(deltaSpeed < -1))
 	{
 		prov.HasInfluence("Crash");
+		prov.HasInfluence("Player");
 		Debug.Log ("FlyCrash");
 	}
 }
@@ -253,6 +254,7 @@ function Prov_LostControl()
 	Prov_GetPlayerAttributes();
 	prov.NewActivityVertex("LostControl");
 	prov.HasInfluence("LostControl");
+	prov.HasInfluence("Player");
 }
 
 

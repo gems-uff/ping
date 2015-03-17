@@ -19,7 +19,6 @@ import System.IO;
  {
  	@XmlArray("vertices")
  	@XmlArrayItem("vertex")
- 	//public var Monsters : List.<Monster>;
  	public var vertexList : List.<Vertex>; 
  	
  	@XmlArray("edges")

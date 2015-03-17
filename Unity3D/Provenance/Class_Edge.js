@@ -10,8 +10,8 @@
 class Edge
 {
 	public var ID : String;				// Edge's Unique ID
-	public var type : String;			// A human-readable type for this edge (i.e. damage, hit points)
-	public var label : String;			// Provenance Label for this edge
+	public var type : String;			// Provenance tyé for this edge
+	public var label : String;			// A human-readable label for this edge (i.e. damage, hit points)
 	public var value : String;		// Value of this edge (i.e. +4)
 	public var sourceID : String;		// Vertex Source of this edge
 	public var targetID : String;		// Vertex Target of this edge
@@ -32,7 +32,7 @@ class Edge
 	//================================================================================================================
 	// Edge Constructor
 	//================================================================================================================
-	function Edge(id_ : String, type_ : String, label_ : String, edge_value_ : String, sourceID_ : String, targetID_ : String)
+	function Edge(id_ : String, label_ : String, type_ : String, edge_value_ : String, sourceID_ : String, targetID_ : String)
 	{
 		this.ID = id_;
 		this.type = type_;
