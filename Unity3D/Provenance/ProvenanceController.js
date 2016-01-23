@@ -75,7 +75,7 @@ private function NewVertexID() : String
 public function CreateProvenanceEdge(source: Vertex, target : Vertex)
 {
 	// Default edge label
-	var newEdge : Edge = new Edge(NewEdgeID(), "Neutral", "WasAssociatedTo", "", source.ID, target.ID);
+	var newEdge : Edge = new Edge(NewEdgeID(), "Neutral", "WasAssociatedWith", "", source.ID, target.ID);
 	
 	// Try to classify using PROV definitions
 	if(source.type == "Activity")
@@ -86,7 +86,7 @@ public function CreateProvenanceEdge(source: Vertex, target : Vertex)
 		}
 		else if(target.type == "Agent")
 		{
-			newEdge = new Edge(NewEdgeID(), "Neutral", "WasAssociatedTo", "", source.ID, target.ID);
+			newEdge = new Edge(NewEdgeID(), "Neutral", "WasAssociatedWith", "", source.ID, target.ID);
 		}
 		else if(target.type == "Entity")
 		{
