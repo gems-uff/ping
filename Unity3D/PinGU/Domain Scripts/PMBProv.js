@@ -1,5 +1,5 @@
 ﻿#pragma strict
-public var playerName : String;
+public var agentName : String;
 public var prov : ExtractProvenance = null;
 
 private var currentGear : int = 0;
@@ -40,7 +40,7 @@ function Awake()
 	prov.influenceContainer = provObj.GetComponent(InfluenceController); 
 	prov.provenance = provObj.GetComponent(ProvenanceController); 
 	
-	Prov_Player(playerName);
+	Prov_Agent(agentName);
 	
 	//InvokeRepeating("Prov_Driving", 2, 2);
 	
@@ -98,7 +98,7 @@ private function Prov_GetAgentAttributes()
 	oldTurn = currentTurn;
 }
 
-public function Prov_Player(pName : String)
+private function Prov_Agent(pName : String)
 {
 	prov.NewAgentVertex(pName);
 }
@@ -107,7 +107,7 @@ public function Prov_Driving()
 {
 	Prov_GetAgentAttributes();
 	prov.NewActivityVertex("Driving");
-	prov.HasInfluence("Player");
+	prov.HasInfluence(agentName);
 	lastFwd = curFwd; // and update lastFwd
 	
 	if(currentTurn < (car.minimumTurn + ((car.maximumTurn - car.minimumTurn) * 0.4)))
@@ -124,7 +124,7 @@ public function Prov_Braking(brake : boolean)
 	{
 		Prov_GetAgentAttributes();
 		prov.NewActivityVertex("Brake");
-		prov.HasInfluence("Player");
+		prov.HasInfluence(agentName);
 		//DragInfluence(dragMultiplier.x);
 		control = false;
 		
@@ -147,7 +147,7 @@ public function Prov_HandBrake()
 	{
 		Prov_GetAgentAttributes();
 		prov.NewActivityVertex("HandBrake");
-		prov.HasInfluence("Player");
+		prov.HasInfluence(agentName);
 		handControl = false;
 		
 		ProvInfluence("LostControl", "LostControl (Crash)", countInf.ToString(), 0, Time.time + 2);
@@ -161,7 +161,7 @@ public function Prov_ReleaseHandBrake()
 {
 	Prov_GetAgentAttributes();
 	prov.NewActivityVertex("ReleasedHandBrake");
-	prov.HasInfluence("Player");
+	prov.HasInfluence(agentName);
 
 	//Debug.Log ("Release HandBrake");
 	handControl = true;
@@ -173,7 +173,7 @@ public function Prov_Crash()
 	{
 		Prov_GetAgentAttributes();
 		prov.NewActivityVertex("Crash");
-		prov.HasInfluence("Player");
+		prov.HasInfluence(agentName);
 		prov.HasInfluence("Crash");
 		ProvInfluence("Flip", "Flip (Crash)", countInf.ToString(), 0, Time.time + 2);
 		ProvInfluence("LostControl", "LostControl (Crash)", countInf.ToString(), 0, Time.time + 2);
@@ -186,7 +186,7 @@ public function Prov_Crash()
 	{
 		Prov_GetAgentAttributes();
 		prov.NewActivityVertex("Scraped");
-		prov.HasInfluence("Player");
+		prov.HasInfluence(agentName);
 		ProvInfluence("Crash", "Bumbing (Crash)", countInf.ToString(), 0, Time.time + 6);
 		Debug.Log ("Scraping");
 	}
@@ -194,7 +194,7 @@ public function Prov_Crash()
 	if((isFlying)&&(deltaSpeed < -1))
 	{
 		prov.HasInfluence("Landing Crash");
-		prov.HasInfluence("Player");
+		prov.HasInfluence(agentName);
 		Debug.Log ("FlyCrash");
 	}
 }
@@ -203,16 +203,15 @@ public function Prov_Flip()
 {
 	Prov_GetAgentAttributes();
 	prov.NewActivityVertex("Flipped");
-	prov.HasInfluence("Player");
+	prov.HasInfluence(agentName);
 	prov.HasInfluence("Flip");
-	//Debug.Log ("Flipped");
 }
 
 function Prov_ChangeGear()
 {
 	Prov_GetAgentAttributes();
 	prov.NewActivityVertex("ChangedGear");
-	prov.HasInfluence("Player");
+	prov.HasInfluence(agentName);
 	//Debug.Log ("Gear Changed");
 }
 
@@ -222,7 +221,7 @@ public function Prov_Flying()
 	{
 		Prov_GetAgentAttributes();
 		prov.NewActivityVertex("Flying");
-		prov.HasInfluence("Player");
+		prov.HasInfluence(agentName);
 		FlyInfluence();
 		oldFlyTime = Time.time;
 		Debug.Log ("Flying");
@@ -236,7 +235,7 @@ public function Prov_Landing()
 	{
 		Prov_GetAgentAttributes();
 		prov.NewActivityVertex("Landing");
-		prov.HasInfluence("Player");
+		prov.HasInfluence(agentName);
 		prov.HasInfluence("Landing");
 		isFlying = false;
 		Debug.Log ("Landing");
@@ -248,13 +247,13 @@ public function Prov_LostControl()
 	Prov_GetAgentAttributes();
 	prov.NewActivityVertex("LostControl");
 	prov.HasInfluence("LostControl");
-	prov.HasInfluence("Player");
+	prov.HasInfluence(agentName);
 }
 
 
 public function DragInfluence(value : float)
 {
-	ProvInfluence("Player", "Drag", countInf.ToString(), value);
+	ProvInfluence(agentName, "Drag", countInf.ToString(), value);
 }
 
 public function FlyInfluence()
@@ -266,9 +265,9 @@ public function FlyInfluence()
 
 public function Influences()
 {
-	ProvInfluence("Player", "TurnRate", countInf.ToString(), deltaTurn);
-	ProvInfluence("Player", "Time", countInf.ToString(), deltaTime);
-	ProvInfluence("Player", "Speed", countInf.ToString(), currentSpeed - oldSpeed);
+	ProvInfluence(agentName, "TurnRate", countInf.ToString(), deltaTurn);
+	ProvInfluence(agentName, "Time", countInf.ToString(), deltaTime);
+	ProvInfluence(agentName, "Speed", countInf.ToString(), currentSpeed - oldSpeed);
 }
 
 public function ProvInfluence(type : String, infType : String, infID : String, value : float)
@@ -285,7 +284,7 @@ public function ProvInfluence(type : String, infType : String, infID : String, v
 
 public function ProvMissebleInfluence(type : String, infType : String, infID : String, value : float)
 {
-	prov.GenerateInfluenceMC("Player", infID, infType, value.ToString(), 1, this.gameObject);
+	prov.GenerateInfluenceMC(agentName, infID, infType, value.ToString(), 1, this.gameObject);
 }
 
 //==========================================================
