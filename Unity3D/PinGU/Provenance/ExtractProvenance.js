@@ -37,10 +37,10 @@
 // *Declarations*
 //=================================================================================================================
 // Influence Controller Object pointer
-public var influenceContainer : InfluenceController;	
+private var influenceContainer : InfluenceController;	
 
 // Provenance Export Object pointer	
-public var provenance : ProvenanceController;	
+private var provenance : ProvenanceController;	
 
 // Last created vertex of this GameObject. It is used by Provenance Controller to link vertices
 private var currentVertex : Vertex = null;	
@@ -49,6 +49,7 @@ private var attributeList : List.<Attribute> = new List.<Attribute>();
 
 private var agentVertex : Vertex = null;
 
+public var provenaceGameObjectName : String = "Provenance";
 //=================================================================================================================
 // *Functions Section*
 //=================================================================================================================
@@ -97,24 +98,28 @@ public function NewActivityVertex(date_ : String, label_ : String, gameobject_ :
 // Uses Time.time for the Vertex.date field
 public function NewAgentVertex(label_ : String)
 {
+	findProvenanceManager();
 	NewAgentVertex((Time.time).ToString(), label_, this.gameObject);
 }
 
 // Uses Time.time for the Vertex.date field
 public function NewAgentVertex(label_ : String, gameobject_ : GameObject)
 {
+	findProvenanceManager();
 	NewAgentVertex((Time.time).ToString(), label_, gameobject_);
 }
 
 // User defines the Vertex.date field
 public function NewAgentVertex(date_ : String, label_ : String)
 {
+	findProvenanceManager();
 	NewAgentVertex(date_, label_, this.gameObject);
 }
 
 // User defines the Vertex.date field
 public function NewAgentVertex(date_ : String, label_ : String, gameobject_ : GameObject)
 {
+	findProvenanceManager();
 	PopulateAttributes(gameobject_);
 	currentVertex = provenance.AddVertex(date_, "Agent", label_, attributeList, null);
 	agentVertex = currentVertex;
@@ -360,8 +365,16 @@ public function SetAgentVertex(vertex : Vertex)
 
 function Awake()
 {
-	var ProvObj : GameObject = GameObject.Find("Provenance");
+	var ProvObj : GameObject = GameObject.Find(provenaceGameObjectName);
 	influenceContainer = ProvObj.GetComponent(InfluenceController);  
 	provenance = ProvObj.GetComponent(ProvenanceController);  
 	
+}
+
+function findProvenanceManager() {
+	if ( provenance == null) {
+		var ProvObj : GameObject = GameObject.Find(provenaceGameObjectName);
+		influenceContainer = ProvObj.GetComponent(InfluenceController);  
+		provenance = ProvObj.GetComponent(ProvenanceController);  
+	}
 }

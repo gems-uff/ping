@@ -1,6 +1,8 @@
 ﻿#pragma strict
 
 private var exported : boolean = false;
+public var provenaceGameObjectName : String = "Provenance";
+public var xmlExportName : String = "";
 
 function Start () {
 
@@ -27,8 +29,8 @@ function OnTriggerExit (other : Collider)
 
 function Prov_Export()
 {
-	Debug.Log ("Exported");
-	var ProvObj : GameObject = GameObject.Find("Provenance");
+	Debug.Log (provenaceGameObjectName);
+	var ProvObj : GameObject = GameObject.Find(provenaceGameObjectName);
 	var prov : ProvenanceController = ProvObj.GetComponent(ProvenanceController); 
-	prov.Save("Angry_Robots");
+	prov.Save(xmlExportName);
 }

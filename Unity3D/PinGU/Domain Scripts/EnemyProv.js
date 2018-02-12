@@ -7,17 +7,11 @@ function Awake()
 {
 	// Load provenance pointers
 	hp = GetComponent(Health);
-	var provObj : GameObject = GameObject.Find("Provenance");
+	
 	prov = GetComponent(ExtractProvenance); 
-	 
-	if(prov == null)
-	{
+	if(prov == null)	{
 		prov = GetComponentInParent(ExtractProvenance); 
 	}
-	
-	prov.influenceContainer = provObj.GetComponent(InfluenceController); 
-	prov.provenance = provObj.GetComponent(ProvenanceController); 
-	
 	Prov_Enemy();
 	
 }
@@ -81,10 +75,10 @@ public function Prov_Attack(damageAmount : float)
 	return this.GetInstanceID().ToString();
 }
 
-// <INTERFACE> Player Interact action
+// <INTERFACE> Enemy Regeneration action
 public function Prov_Regenerate(regValue : float)
 {
-	prov.GenerateInfluenceC("Player", this.GetInstanceID().ToString(), "Health (Player)", regValue.ToString(), 1);
+	prov.GenerateInfluenceC("Enemy", this.GetInstanceID().ToString(), "Health (Enemy)", regValue.ToString(), 1);
 }
 
 // <INTERFACE> Enemy Death action
@@ -129,7 +123,7 @@ function Prov_generateTakeDamage(damageAmount : float)
 	var heroObj : GameObject = GameObject.FindGameObjectWithTag("Player");
 	var player : PlayerProv = heroObj.GetComponent(PlayerProv);
 	player.Prov_Attack();
-	player.prov.GenerateInfluenceC("Enemy", this.GetInstanceID().ToString(), "Health (Enemy)", (-damageAmount).ToString(), 1);
+	player.prov.GenerateInfluenceC("Enemy", "Enemy" + this.GetInstanceID().ToString(), "Health (Enemy)", (-damageAmount).ToString(), 1);
 }
 
 // Enemy took damage
@@ -137,6 +131,6 @@ public function Prov_Hurt(infID : String)
 {
 	Prov_GetEnemyAttributes();
 	prov.NewActivityVertex("Taking Hit", this.gameObject);
-	prov.HasInfluence_ID(infID);
+	prov.HasInfluence_ID("Enemy" + infID);
 }
 	

@@ -6,18 +6,10 @@ function Awake()
 {
 	// Load provenance pointers
 	hp = GetComponent(Health);
-	
-	var provObj : GameObject = GameObject.Find("Provenance");
 	prov = GetComponent(ExtractProvenance); 
-	
-	if(prov == null)
-	{
+	if(prov == null)	{
 		prov = GetComponentInParent(ExtractProvenance); 
 	}
-	
-	prov.influenceContainer = provObj.GetComponent(InfluenceController); 
-	prov.provenance = provObj.GetComponent(ProvenanceController); 
-	
 	Prov_Player();
 	
 	InvokeRepeating("Prov_Walk", 2, 2);
@@ -37,14 +29,14 @@ public function Prov_GetPlayerAttributes()
 // Player
 //==========================================================
 
-// // <INTERFACE> Player agent
+// Player agent
 public function Prov_Player()
 {
 	Prov_GetPlayerAttributes();
 	prov.NewAgentVertex("Player");
 }
 
-// <INTERFACE> Player Walk action
+// Player Walk action
 public function Prov_Walk()
 {
 	Prov_GetPlayerAttributes();
@@ -52,7 +44,7 @@ public function Prov_Walk()
 	prov.HasInfluence("Player");
 }
 
-// <INTERFACE> Player Jump action
+// Player Jump action
 public function Prov_Jump()
 {
 	Prov_GetPlayerAttributes();
@@ -60,7 +52,7 @@ public function Prov_Jump()
 	prov.HasInfluence("Player");
 }
 
-// <INTERFACE> Player Interact action
+// Player Interact action
 public function Prov_Interact()
 {
 	Prov_GetPlayerAttributes();
@@ -68,13 +60,13 @@ public function Prov_Interact()
 	prov.HasInfluence("Player");
 }
 
-// <INTERFACE> Player Interact action
+// Player Interact action
 public function Prov_Regenerate(regValue : float)
 {
 	prov.GenerateInfluenceC("Player", this.GetInstanceID().ToString(), "Health (Player)", regValue.ToString(), 1);
 }
 
-// <INTERFACE> Player attack action
+// Player attack action
 public function Prov_Attack()
 {
 	Prov_GetPlayerAttributes();
@@ -82,7 +74,7 @@ public function Prov_Attack()
 	prov.HasInfluence("Player");
 }
 
-// <INTERFACE> Player took damage
+// Player took damage
 function Prov_TakeDamage(enemy : GameObject, damageAmount : float)
 {
 	var enemyProv : EnemyProv = enemy.GetComponent(EnemyProv); 
@@ -114,7 +106,7 @@ public function Prov_TakeDamage()
 	prov.HasInfluence("PlayerDamage");
 }
 
-// <INTERFACE> Player Death action
+//Player Death action
 public function Prov_Death()
 {	
 	Prov_GetPlayerAttributes();
@@ -123,7 +115,7 @@ public function Prov_Death()
 	//Prov_Export();
 }
 
-// <INTERFACE> Player Death action
+// Player Death action
 public function Prov_Respawn()
 {	
 	Prov_GetPlayerAttributes();

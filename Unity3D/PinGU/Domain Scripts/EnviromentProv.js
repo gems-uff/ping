@@ -4,8 +4,13 @@ public var prov : ExtractProvenance = null;
 function Awake()
 {
 	// Load provenance pointers
-	var provObj : GameObject = GameObject.Find("Provenance");
 	prov = GetComponent(ExtractProvenance); 
+	if(prov == null)	{
+		prov = GetComponentInParent(ExtractProvenance); 
+	}
+	/*
+	var provObj : GameObject = GameObject.Find("Provenance");
+	
 	
 	if(prov == null)
 	{
@@ -14,7 +19,7 @@ function Awake()
 	
 	prov.influenceContainer = provObj.GetComponent(InfluenceController); 
 	prov.provenance = provObj.GetComponent(ProvenanceController); 
-	
+	*/
 	Prov_EnviromentAgent();
 }
 

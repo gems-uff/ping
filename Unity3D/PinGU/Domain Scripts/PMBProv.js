@@ -29,16 +29,11 @@ private var car : Car;
 
 function Awake()
 {
-	var provObj : GameObject = GameObject.Find("Provenance");
 	prov = GetComponent(ExtractProvenance); 
 	
-	if(prov == null)
-	{
+	if(prov == null){
 		prov = GetComponentInParent(ExtractProvenance); 
 	}
-	
-	prov.influenceContainer = provObj.GetComponent(InfluenceController); 
-	prov.provenance = provObj.GetComponent(ProvenanceController); 
 	
 	Prov_Agent(agentName);
 	
