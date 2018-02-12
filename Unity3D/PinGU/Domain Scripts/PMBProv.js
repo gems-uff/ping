@@ -1,14 +1,9 @@
 ﻿#pragma strict
 public var playerName : String;
-public var minimumTurn : float;
-public var maximumTurn : float;
-public var topSpeed : float;
 public var prov : ExtractProvenance = null;
 
-private var throttle : float = 0;
 private var currentGear : int = 0;
 private var currentEnginePower : float = 0;
-
 private var oldEnginePowerHand : float = 0;
 private var oldEnginePowerBrake : float = 0;
 private var oldSpeed : float = 0;
@@ -30,6 +25,7 @@ private var countInf : int = 1;
 private var lastFwd : Vector3;
 private var curAngleX : float = 0;
 private var curFwd : Vector3;
+private var car : Car;
 
 function Awake()
 {
@@ -49,6 +45,8 @@ function Awake()
 	//InvokeRepeating("Prov_Driving", 2, 2);
 	
 	lastFwd = transform.forward;
+	
+	car = GetComponentInParent(Car); 
 }
 
 function Update()
@@ -58,38 +56,34 @@ function Update()
 // Necessary to update these values before making any Provenance Call	
 function UpdateAttributes(throttle_ : float, currentGear_ : int, currentEnginePower_ : float)
 {
-	throttle = throttle_;
 	currentGear = currentGear_;
 	currentEnginePower = currentEnginePower_;
 }
 
 	
-function Prov_GetPlayerAttributes()
+private function Prov_GetAgentAttributes()
 {
+	car = GetComponentInParent(Car); 
 	currentSpeed = rigidbody.velocity.magnitude;
 	currentTurn = EvaluateSpeedToTurn(currentSpeed);
 	deltaTime = Time.time - oldTime;
 	deltaSpeed = currentSpeed - oldSpeed;
 	velocityVector = rigidbody.velocity;
-	
-	//dragVector = rigidbody.angularDrag;
 	angularVelocity = rigidbody.angularVelocity;
 	velocityVector.Normalize();
 	angularVelocity.Normalize();
 	dragVector.Normalize();
 	
-	prov.AddAttribute("Throttle", throttle.ToString());
+	prov.AddAttribute("Throttle", car.throttle.ToString());
+	prov.AddAttribute("Top Speed", car.topSpeed.ToString());
+	prov.AddAttribute("Minimum Turn", car.minimumTurn.ToString());
+	prov.AddAttribute("Maximum Turn", car.maximumTurn.ToString());
 	prov.AddAttribute("Speed", currentSpeed.ToString());
+	prov.AddAttribute("SuspensionSpringFront", car.suspensionSpringFront.ToString());
+	prov.AddAttribute("SuspensionSpringRear", car.suspensionSpringRear.ToString());
 	prov.AddAttribute("CurrentGear", currentGear.ToString());
 	prov.AddAttribute("CurrentEnginePower", currentEnginePower.ToString());
 	prov.AddAttribute("TurnRate", currentTurn.ToString());
-	//prov.AddAttribute("Velocity_X", rigidbody.velocity.x.ToString());
-	//prov.AddAttribute("Velocity_Y", rigidbody.velocity.y.ToString());
-	//prov.AddAttribute("Velocity_Z", rigidbody.velocity.z.ToString());
-	//prov.AddAttribute("AngularVelocity_X", rigidbody.angularVelocity.x.ToString());
-	//prov.AddAttribute("AngularVelocity_Y", rigidbody.angularVelocity.y.ToString());
-	//prov.AddAttribute("AngularVelocity_Z", rigidbody.angularVelocity.z.ToString());
-	//prov.AddAttribute("AngularDrag", rigidbody.angularDrag.ToString());
 	prov.AddAttribute("CarMass", rigidbody.mass.ToString());
 	prov.AddAttribute("DeltaTime", deltaTime.ToString());
 	prov.AddAttribute("VelocityVector", velocityVector.ToString());
@@ -104,31 +98,31 @@ function Prov_GetPlayerAttributes()
 	oldTurn = currentTurn;
 }
 
-function Prov_Player(pName : String)
+public function Prov_Player(pName : String)
 {
 	prov.NewAgentVertex(pName);
 }
 
-function Prov_Driving()
+public function Prov_Driving()
 {
-	Prov_GetPlayerAttributes();
+	Prov_GetAgentAttributes();
 	prov.NewActivityVertex("Driving");
 	prov.HasInfluence("Player");
 	lastFwd = curFwd; // and update lastFwd
 	
-	if(currentTurn < (minimumTurn + ((maximumTurn - minimumTurn) * 0.4)))
+	if(currentTurn < (car.minimumTurn + ((car.maximumTurn - car.minimumTurn) * 0.4)))
 	{
 		Debug.Log ("Too FAST!!!");
-		ProvInfluence("Crash", "TurnRate (Crash)", countInf.ToString(), (currentTurn - maximumTurn), Time.time + 2);
+		ProvInfluence("Crash", "TurnRate (Crash)", countInf.ToString(), (currentTurn - car.maximumTurn), Time.time + 2);
 	}
 	//Debug.Log ("Driving");
 }
 
-function Prov_Braking(brake : boolean)
+public function Prov_Braking(brake : boolean)
 {
 	if(brake && control)
 	{
-		Prov_GetPlayerAttributes();
+		Prov_GetAgentAttributes();
 		prov.NewActivityVertex("Brake");
 		prov.HasInfluence("Player");
 		//DragInfluence(dragMultiplier.x);
@@ -147,11 +141,11 @@ function Prov_Braking(brake : boolean)
 	}
 }
 
-function Prov_HandBrake()
+public function Prov_HandBrake()
 {
 	if(handControl)
 	{
-		Prov_GetPlayerAttributes();
+		Prov_GetAgentAttributes();
 		prov.NewActivityVertex("HandBrake");
 		prov.HasInfluence("Player");
 		handControl = false;
@@ -163,9 +157,9 @@ function Prov_HandBrake()
 	}
 }
 
-function Prov_ReleaseHandBrake()
+public function Prov_ReleaseHandBrake()
 {
-	Prov_GetPlayerAttributes();
+	Prov_GetAgentAttributes();
 	prov.NewActivityVertex("ReleasedHandBrake");
 	prov.HasInfluence("Player");
 
@@ -173,11 +167,11 @@ function Prov_ReleaseHandBrake()
 	handControl = true;
 }
 
-function Prov_Crash()
+public function Prov_Crash()
 {
 	if(deltaSpeed < -5)
 	{
-		Prov_GetPlayerAttributes();
+		Prov_GetAgentAttributes();
 		prov.NewActivityVertex("Crash");
 		prov.HasInfluence("Player");
 		prov.HasInfluence("Crash");
@@ -190,7 +184,7 @@ function Prov_Crash()
 	}
 	else if (deltaSpeed < -1)
 	{
-		Prov_GetPlayerAttributes();
+		Prov_GetAgentAttributes();
 		prov.NewActivityVertex("Scraped");
 		prov.HasInfluence("Player");
 		ProvInfluence("Crash", "Bumbing (Crash)", countInf.ToString(), 0, Time.time + 6);
@@ -199,15 +193,15 @@ function Prov_Crash()
 	
 	if((isFlying)&&(deltaSpeed < -1))
 	{
-		prov.HasInfluence("Crash");
+		prov.HasInfluence("Landing Crash");
 		prov.HasInfluence("Player");
 		Debug.Log ("FlyCrash");
 	}
 }
 
-function Prov_Flip()
+public function Prov_Flip()
 {
-	Prov_GetPlayerAttributes();
+	Prov_GetAgentAttributes();
 	prov.NewActivityVertex("Flipped");
 	prov.HasInfluence("Player");
 	prov.HasInfluence("Flip");
@@ -216,17 +210,17 @@ function Prov_Flip()
 
 function Prov_ChangeGear()
 {
-	Prov_GetPlayerAttributes();
+	Prov_GetAgentAttributes();
 	prov.NewActivityVertex("ChangedGear");
 	prov.HasInfluence("Player");
 	//Debug.Log ("Gear Changed");
 }
 
-function Prov_Flying()
+public function Prov_Flying()
 {
 	if((!isFlying) && (Time.time - oldFlyTime > 2))
 	{
-		Prov_GetPlayerAttributes();
+		Prov_GetAgentAttributes();
 		prov.NewActivityVertex("Flying");
 		prov.HasInfluence("Player");
 		FlyInfluence();
@@ -236,11 +230,11 @@ function Prov_Flying()
 	}
 }
 
-function Prov_Landing()
+public function Prov_Landing()
 {
 	if(isFlying)
 	{
-		Prov_GetPlayerAttributes();
+		Prov_GetAgentAttributes();
 		prov.NewActivityVertex("Landing");
 		prov.HasInfluence("Player");
 		prov.HasInfluence("Landing");
@@ -249,47 +243,47 @@ function Prov_Landing()
 	}
 }
 
-function Prov_LostControl()
+public function Prov_LostControl()
 {
-	Prov_GetPlayerAttributes();
+	Prov_GetAgentAttributes();
 	prov.NewActivityVertex("LostControl");
 	prov.HasInfluence("LostControl");
 	prov.HasInfluence("Player");
 }
 
 
-function DragInfluence(value : float)
+public function DragInfluence(value : float)
 {
 	ProvInfluence("Player", "Drag", countInf.ToString(), value);
 }
 
-function FlyInfluence()
+public function FlyInfluence()
 {
 	ProvInfluence("Crash", "Flying  (Crash)", countInf.ToString(), 0, Time.time + 2);
 	ProvInfluence("Landing", "Landing", countInf.ToString(), 0);
 	ProvInfluence("LostControl", "LostControl  (Crash)", countInf.ToString(), 0, Time.time + 2);
 }
 
-function Influences()
+public function Influences()
 {
 	ProvInfluence("Player", "TurnRate", countInf.ToString(), deltaTurn);
 	ProvInfluence("Player", "Time", countInf.ToString(), deltaTime);
 	ProvInfluence("Player", "Speed", countInf.ToString(), currentSpeed - oldSpeed);
 }
 
-function ProvInfluence(type : String, infType : String, infID : String, value : float)
+public function ProvInfluence(type : String, infType : String, infID : String, value : float)
 {
 	prov.GenerateInfluenceC(type, infID, infType, value.ToString(), 1);
 	countInf++;
 }
 
-function ProvInfluence(type : String, infType : String, infID : String, value : float, expirationTime : float)
+public function ProvInfluence(type : String, infType : String, infID : String, value : float, expirationTime : float)
 {
 	prov.GenerateInfluenceCE(type, infID, infType, value.ToString(), 1, expirationTime);
 	countInf++;
 }
 
-function ProvMissebleInfluence(type : String, infType : String, infID : String, value : float)
+public function ProvMissebleInfluence(type : String, infType : String, infID : String, value : float)
 {
 	prov.GenerateInfluenceMC("Player", infID, infType, value.ToString(), 1, this.gameObject);
 }
@@ -300,13 +294,13 @@ function ProvMissebleInfluence(type : String, infType : String, infID : String, 
 
 private var ResetTimeR : float = 3;
 private var oldAngleTime : float = 0.0;
-function EvaluateSpeedToTurn(speed : float)
+private function EvaluateSpeedToTurn(speed : float)
 {
-	if(speed > topSpeed / 2)
-		return minimumTurn;
+	if(speed > car.topSpeed / 2)
+		return car.minimumTurn;
 	
-	var speedIndex : float = 1 - (speed / (topSpeed / 2));
-	return minimumTurn + speedIndex * (maximumTurn - minimumTurn);
+	var speedIndex : float = 1 - (speed / (car.topSpeed / 2));
+	return car.minimumTurn + speedIndex * (car.maximumTurn - car.minimumTurn);
 }
 
 function Check_If_Car_Lost_Control(){
