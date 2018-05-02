@@ -9,6 +9,8 @@ The provenance analysis is done by processing collected gameplay data and genera
 
 The Provenance in Games conceptual framework was initially instantiated in the Software Development Manager (SDM) game as a proof of concept. The SDM game focuses on introducing Software Engineering concepts and skills to undergraduate students. The version of SDM with provenance support makes use of the conceptual framework for collecting provenance and can be viewed by using Prov Viewer, an integral tool for visualizing the provenance graph.
 
+This project was initiated by Troy Kohwalter and professors Leonardo Murta and Esteban Clua during Troy's doctoral course at Universidade Federal Fluminense.
+
 # Team
 
 * Troy Costa Kohwalter (joined in July 2014)
@@ -30,6 +32,7 @@ The Provenance in Games conceptual framework was initially instantiated in the S
 
 * [Unity](https://unity3d.com/)
 * [UnityScript](http://wiki.unity3d.com/index.php/UnityScript_versus_JavaScript)
+* [Prov Viewer](https://github.com/gems-uff/prov-viewer)
 
 
 # License
