@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace PinGU { 
     public class ExtractProvenance : MonoBehaviour
@@ -67,13 +68,13 @@ namespace PinGU {
         // Uses Time.time for the Vertex.date field and this gameobject
         public void NewActivityVertex(string label_)
         {
-            NewActivityVertex((Time.time).ToString(), label_, this.gameObject);
+            NewActivityVertex((Time.time).ToString(CultureInfo.InvariantCulture), label_, this.gameObject);
         }
 
         // Uses Time.time for the Vertex.date field
         public void NewActivityVertex(string label_, GameObject gameobject_)
         {
-            NewActivityVertex((Time.time).ToString(), label_, gameobject_);
+            NewActivityVertex((Time.time).ToString(CultureInfo.InvariantCulture), label_, gameobject_);
         }
 
         // User defines the Vertex.date field
@@ -102,13 +103,13 @@ namespace PinGU {
         // Uses Time.time for the Vertex.date field
         public void NewAgentVertex(string label_)
         {
-            NewAgentVertex((Time.time).ToString(), label_, this.gameObject);
+            NewAgentVertex((Time.time).ToString(CultureInfo.InvariantCulture), label_, this.gameObject);
         }
 
         // Uses Time.time for the Vertex.date field
         public void NewAgentVertex(string label_, GameObject gameobject_)
         {
-            NewAgentVertex((Time.time).ToString(), label_, gameobject_);
+            NewAgentVertex((Time.time).ToString(CultureInfo.InvariantCulture), label_, gameobject_);
         }
 
         // User defines the Vertex.date field
@@ -134,25 +135,25 @@ namespace PinGU {
         // Uses Time.time for the Vertex.date field
         public void NewEntityVertex(string label_)
         {
-            NewEntityVertex((Time.time).ToString(), label_, this.gameObject);
+            NewEntityVertex((Time.time).ToString(CultureInfo.InvariantCulture), label_, this.gameObject);
         }
 
         // Uses Time.time for the Vertex.date field
         public void NewEntityVertex(string label_, GameObject gameobject_)
         {
-            NewEntityVertex((Time.time).ToString(), label_, gameobject_);
+            NewEntityVertex((Time.time).ToString(CultureInfo.InvariantCulture), label_, gameobject_);
         }
 
         // Uses Time.time for the Vertex.date field. Links Entity to the Agent that created it
         public void NewEntityVertexFromAgent(string label_)
         {
-            NewEntityVertexFromAgent((Time.time).ToString(), label_, this.gameObject);
+            NewEntityVertexFromAgent((Time.time).ToString(CultureInfo.InvariantCulture), label_, this.gameObject);
         }
 
         // Uses Time.time for the Vertex.date field. Links Entity to the Agent that created it
         public void NewEntityVertexFromAgent(string label_, GameObject gameobject_)
         {
-            NewEntityVertexFromAgent((Time.time).ToString(), label_, gameobject_);
+            NewEntityVertexFromAgent((Time.time).ToString(CultureInfo.InvariantCulture), label_, gameobject_);
         }
 
         // Uses Time.time for the Vertex.date field
@@ -197,7 +198,7 @@ namespace PinGU {
         // Uses Time.time for the Vertex.date field
         public void NewVertex(string type_, string label_, GameObject gameobject_)
         {
-            NewVertex((Time.time).ToString(), type_, label_, gameobject_);
+            NewVertex((Time.time).ToString(CultureInfo.InvariantCulture), type_, label_, gameobject_);
         }
 
         // User defines the Vertex.date field
