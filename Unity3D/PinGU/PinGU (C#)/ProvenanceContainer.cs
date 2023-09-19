@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Xml;
@@ -46,6 +47,11 @@ namespace PinGU {
         public void Save(string path)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(ProvenanceContainer));
+            var folderPath = path.Substring(0, path.LastIndexOf("/", StringComparison.InvariantCulture));
+
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath); 
+            
             Stream stream = new FileStream(path, FileMode.Create);
             serializer.Serialize(stream, this);
             stream.Close();
