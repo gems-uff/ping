@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dffa2b5da8040b993dac26ad076556d, type: 3}
+  m_Name: ReplaySettings
+  m_EditorClassIdentifier: 
+  _saveReplayDataEveryTickCount: 4
+  _saveReplayFileName: replay-data-
+  _replayObjectPrefabs:
+  - {fileID: 44351093248703823, guid: 621313838c7a76f47b3266e68fe794de, type: 3}
+  - {fileID: 3196588543477585258, guid: 878e9864894ede5458a1dc890ae38e03, type: 3}
