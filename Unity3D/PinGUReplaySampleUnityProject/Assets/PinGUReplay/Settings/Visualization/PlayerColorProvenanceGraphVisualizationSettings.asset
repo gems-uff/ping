@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b619ecee0a643aca3ee8d4e7da40fe2, type: 3}
+  m_Name: PlayerColorProvenanceGraphVisualizationSettings
+  m_EditorClassIdentifier: 
+  renderInfoAlpha: 1
+  _vertexNodePrefab: {fileID: 8553799344590658475, guid: 33f16929f45e58348b445b1643bd70cf, type: 3}
+  _vertexNodeColor: {r: 0.49803922, g: 0, b: 1, a: 0.19607843}
+  _activityBackground: {fileID: 21300000, guid: ccb7bb1c995421b4891b2dcacb9b8709, type: 3}
+  _agentBackground: {fileID: 21300000, guid: c0b0a671769e8b249b731048274fcc15, type: 3}
+  _entityBackground: {fileID: 21300000, guid: c560a9ef377132d4986e7d3240e70d35, type: 3}
+  _vertexObjectNameColors:
+  - ObjectName: Player
+    Color: {r: 1, g: 0.972549, b: 0.11764706, a: 0.19607843}
+  _vertexObjectTagColors: []
+  _vertexLabelColors: []
+  _vertexTypeColors: []
+  _showVertexTime: 1
+  _showVertexType: 1
+  _showVertexLabel: 1
+  _showVertexObjectName: 1
+  _showVertexObjectTag: 1
+  _edgeNodePrefab: {fileID: 7726165062501997281, guid: af7a6eeeed6391745b11544d94a3bdce, type: 3}
+  _positiveRelationEdgeLineColor: {r: 0.31080556, g: 1, b: 0, a: 0.39215687}
+  _neutralRelationEdgeLineColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.39215687}
+  _negativeRelationEdgeLineColor: {r: 1, g: 0, b: 0, a: 0.39215687}
+  _edgeLineWidth: 0.3
+  _showEdgeType: 1
+  _showEdgeLabel: 1
+  _nodeScaleOverTimeAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.20976563
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.95
+      value: 0.35
+      inSlope: 0.46334445
+      outSlope: 0.7001147
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.1470884
+      outWeight: 0.325534
+    - serializedVersion: 3
+      time: 1
+      value: 1.0097656
+      inSlope: 1.3239902
+      outSlope: 1.3239902
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.19352655
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
