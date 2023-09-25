@@ -58,7 +58,7 @@ This project was initiated by Leonardo Thurler, Sidney Melo and professors Esteb
 * [Unity](https://unity3d.com/)
 * [C#](https://en.wikipedia.org/wiki/C_Sharp_(programming_language))
 * [UnityScript](http://wiki.unity3d.com/index.php/UnityScript_versus_JavaScript)
-* [Prov Viewer](https://github.com/gems-uff/prov-viewer)
+* [Prov Viewer](http://gems-uff.github.io/prov-viewer/)
 
 # License
 
