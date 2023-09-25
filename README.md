@@ -40,8 +40,9 @@ This project was initiated by Leonardo Thurler, Sidney Melo and professors Esteb
 
 # Documentation
 
-* [PinGU - Published Paper](https://www.researchgate.net/profile/Troy_Kohwalter)
-* [PinGU - Presentation](https://drive.google.com/file/d/1iwdYhujuxTWM8Lv3DEj7tHlyv3guJ1BF/view?usp=sharing)
+* [PinGU - Published Paper](http://profs.ic.uff.br/~troy/papers/2018_EntComp.pdf)
+* [PinGU - Presentation](http://profs.ic.uff.br/~troy/presentations/2017_SBGames.pdf)
+* [Other related Papers](http://profs.ic.uff.br/~troy/research.html)
 
 # Videos
 
