@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41e30a942e964dd0a1874577387c9225, type: 3}
+  m_Name: IncludeModeProvenanceGraphFilterSettings
+  m_EditorClassIdentifier: 
+  _autoSyncGraphReplay: 1
+  _pastSecondsToShow: 60
+  _futureSecondsToShow: 60
+  _filterMode: 0
+  _includeVisualizationFilters:
+  - IncludeVertexLabel: PlayerPosition
+    IncludeEdgeRelation: 1
+    IgnoreThisFilter: 0
+    ExcludeVertexType: 
+    ExcludeVertexObjectsName: []
+    ExcludeVertexObjectsTag: []
+    ExcludeEdgeLabels:
+    - Neutral
+    ExcludeEdgeTypes: 
+    ExcludeEdgeVertexObjectsLabels: []
+    ExcludeEdgeVertexObjectsType: 02000000
+    ExcludeEdgeVertexObjectsName: []
+    ExcludeEdgeVertexObjectsTag: []
+  _excludeRemoveVertexVisualizationFilters:
+    VertexLabels: []
+    VertexTypes: 
+    VertexObjectsName: []
+    VertexObjectsTag: []
+  _excludeRemoveEdgesVisualizationFilters:
+    EdgeRelation: 0
+    EdgesLabels: []
+    EdgesTypes: 
+    VertexObjectsLabels: []
+    VertexObjectsType: 
+    VertexObjectsName: []
+    VertexObjectsTag: []
