@@ -46,7 +46,8 @@ This project was initiated by Leonardo Thurler, Sidney Melo and professors Esteb
 
 # Videos
 
-* [PinGU Replay - How to use](https://bit.ly/how-to-use-pingu-replay)
+* [PinGU Replay - Analysis sample](https://bit.ly/pingu-replay-analysis-sample)
+* [PinGU Replay - How to use](https://bit.ly/pingu-replay-how-to-use)
 
 # Development
 
