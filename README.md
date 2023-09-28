@@ -45,9 +45,9 @@ This project was initiated by Leonardo Thurler, Sidney Melo and professors Esteb
 * [Other related Papers](http://profs.ic.uff.br/~troy/research.html)
 
 # Videos
-
-* [PinGU Replay - Analysis sample](https://bit.ly/pingu-replay-analysis-sample)
-* [PinGU Replay - How to use](https://bit.ly/pingu-replay-how-to-use)
+* [PinGU Replay - Features overview](https://www.youtube.com/watch?v=MYl8XwFbTVM)
+* [PinGU Replay - Analysis sample](https://www.youtube.com/watch?v=NXfzvyxo3w8)
+* [PinGU Replay - Analysis sample (pt-BR)](https://www.youtube.com/watch?v=jiO0I3lpAYE)
 
 # Development
 
