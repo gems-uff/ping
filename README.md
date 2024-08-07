@@ -42,6 +42,8 @@ This project was initiated by Leonardo Thurler, Sidney Melo and professors Esteb
 
 * [PinGU - Published Paper](http://profs.ic.uff.br/~troy/papers/2018_EntComp.pdf)
 * [PinGU - Presentation](http://profs.ic.uff.br/~troy/presentations/2017_SBGames.pdf)
+* [PinGU Replay - Published Paper](http://profs.ic.uff.br/~troy/papers/2025_EntComp_ProvReplay.pdf)
+* [PinGU Replay - Master's thesis](https://drive.google.com/file/d/1zlz22206auVeoVsG_vIifk097hagJjnS/view)
 * [Other related Papers](http://profs.ic.uff.br/~troy/research.html)
 
 # Videos
