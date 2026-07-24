@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://7npy3c5xiyvk"]
+
+[ext_resource type="Script" uid="uid://diut5ih441smh" path="res://Main.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://1o3dli8yxbig" path="res://addons/PinGODOT_manager/AutoCollector.gd" id="2_collector"]
+
+[sub_resource type="CircleShape2D" id="Circle_player"]
+radius = 20.0
+
+[sub_resource type="CircleShape2D" id="Circle_coin"]
+radius = 13.0
+
+[sub_resource type="CircleShape2D" id="Circle_obstacle"]
+radius = 20.0
+
+[sub_resource type="CircleShape2D" id="Circle_powerup"]
+radius = 15.0
+
+[node name="Main" type="Node2D" unique_id=1650517903]
+script = ExtResource("1_main")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=644488513]
+position = Vector2(120, 330)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=967222043]
+shape = SubResource("Circle_player")
+
+[node name="Coin" type="Area2D" parent="." unique_id=1784116643]
+position = Vector2(700, 320)
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Coin" unique_id=325367065]
+shape = SubResource("Circle_coin")
+
+[node name="ObstacleA" type="Area2D" parent="." unique_id=1291660365]
+position = Vector2(430, 220)
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleA" unique_id=2085531536]
+shape = SubResource("Circle_obstacle")
+
+[node name="ObstacleB" type="Area2D" parent="." unique_id=1546276261]
+position = Vector2(520, 430)
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleB" unique_id=1512914638]
+shape = SubResource("Circle_obstacle")
+
+[node name="PowerUp" type="Area2D" parent="." unique_id=299528643]
+position = Vector2(750, 470)
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PowerUp" unique_id=1901631122]
+shape = SubResource("Circle_powerup")
+
+[node name="GameAutoCollector" type="Node" parent="." unique_id=168937676 node_paths=PackedStringArray("target_node")]
+script = ExtResource("2_collector")
+target_node = NodePath("..")
+vertex_type = "Agent"
+log_interval = 0.5
+monitored_flags = {
+"_build_interface": false,
+"_draw": false,
+"_export_collection": false,
+"_on_coin_body_entered": false,
+"_on_obstacle_body_entered": false,
+"_on_powerup_body_entered": false,
+"_place_randomly": false,
+"_unhandled_key_input": false,
+"_update_interface": false,
+"auto_translate_mode": false,
+"boost_active": true,
+"clip_children": false,
+"collect_coin": true,
+"collect_powerup": true,
+"editor_description": false,
+"game_finished": true,
+"light_mask": false,
+"lives": true,
+"lose_game": true,
+"physics_interpolation_mode": false,
+"player_position": true,
+"position": false,
+"process_mode": false,
+"process_physics_priority": false,
+"process_priority": false,
+"process_thread_group": false,
+"restart_game": true,
+"rotation": false,
+"scale": false,
+"score": true,
+"show_behind_parent": false,
+"signal::coin_collected": true,
+"signal::game_lost": true,
+"signal::game_restarted": true,
+"signal::game_won": true,
+"signal::player_damaged": true,
+"signal::powerup_collected": true,
+"skew": false,
+"take_damage": true,
+"texture_filter": false,
+"texture_repeat": false,
+"time_remaining": true,
+"top_level": false,
+"use_parent_material": false,
+"visibility_layer": false,
+"visible": false,
+"win_game": true,
+"y_sort_enabled": false,
+"z_as_relative": false,
+"z_index": false
+}

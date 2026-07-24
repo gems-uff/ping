@@ -21,6 +21,14 @@ Provenance in Games for Unity with Replay (PinGU Replay) is a generic component 
 
 This project was initiated by Leonardo Thurler, Sidney Melo and professors Esteban Clua and Troy Kohwalter during Leonardo's master course at Universidade Federal Fluminense.
 
+# Provenance in Games for Godot
+
+Provenance in Games for Godot (PinGODOT) is an implementation of the PinG conceptual framework for Godot 4. It provides a reusable GDScript-based core for representing gameplay data as provenance Agents, Activities, Entities, and their corresponding relations. The collected provenance can be exported to and imported from JSON for post-game analysis.
+
+PinGODOT Manager extends the core with editor tools for semi-automated provenance collection. The addon provides configurable property monitoring, method instrumentation, signal and interaction capture, provenance statistics, and an in-editor graph visualizer. The visualizer supports temporal navigation, repeated-activity aggregation, causal-neighborhood highlighting, and graph image export.
+
+This project was initiated by David Lopes and Professor Troy Kohwalter as part of David's undergraduate research in Computer Science at Universidade Federal Fluminense.
+
 # Team
 
 * Troy Costa Kohwalter (joined in July 2014)
@@ -31,12 +39,16 @@ This project was initiated by Leonardo Thurler, Sidney Melo and professors Esteb
 
 * Sidney Araujo Melo (joined in May 2019)
 * Leonardo Pereira Thurler (joined in September 2023)
+* David Lopes de Santana Vazquez (joined in September 2024)
 
 # About the project folders
 * The Documents folder contains a tutorial about PinG and some diagrams.
 * To use only PinGU, you can get the desired version C# or js at Unity3D/PinGU folder.
 * To use PinGU Replay, you can get it at Unity/PinGUReplay folder. This folder contains PinGU and all dependencies that PinGU Replay needs. PinGU Replay is only available on C#.
 * The Unity/PinGUReplaySampleUnityProject folder contains a sample project using PinGU Replay. This project is a simple platform 2D game where the player needs collect five coins to finish game.
+* The Godot/PinGODOT folder contains the PinGODOT core implementation.
+* The`Godot/addons/PinGODOT_manager folder contains the PinGODOT Manager editor addon.
+* The Godot/example folder contains a sample Godot project demonstrating provenance collection and visualization.
 
 # Documentation
 
@@ -62,6 +74,8 @@ This project was initiated by Leonardo Thurler, Sidney Melo and professors Esteb
 * [C#](https://en.wikipedia.org/wiki/C_Sharp_(programming_language))
 * [UnityScript](http://wiki.unity3d.com/index.php/UnityScript_versus_JavaScript)
 * [Prov Viewer](http://gems-uff.github.io/prov-viewer/)
+* [Godot Engine](https://godotengine.org/)
+* [GDScript](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/)
 
 # License
 
